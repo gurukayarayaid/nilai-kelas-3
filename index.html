@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Aplikasi Nilai Murid</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: #f4f6f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .login-card { background: #fff; padding: 35px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 380px; border-top: 5px solid #007bff; }
+        .login-card h3 { margin-top: 0; text-align: center; color: #333; margin-bottom: 18px; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab { flex: 1; text-align: center; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; color: #666; background: #f8f9fa; }
+        .tab.active { background: #007bff; border-color: #007bff; color: #fff; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: bold; color: #555; font-size: 14px; }
+        .form-group input, .form-group select { width: 100%; padding: 11px; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; font-size: 15px; }
+        .form-group select { text-align: center; }
+        .form-group input { text-align: center; }
+        .btn-login { width: 100%; padding: 12px; background: #007bff; border: none; color: white; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .btn-login:hover { background: #0056b3; }
+        .btn-login:disabled { background: #a0aec0; cursor: not-allowed; }
+        .error-msg { color: #e53e3e; font-size: 14px; text-align: center; margin-bottom: 15px; font-weight: bold; }
+        .hint { font-size: 12px; color: #888; text-align: center; margin-top: 14px; line-height: 1.5; }
+        .pane { display: none; } .pane.active { display: block; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h3>Aplikasi Nilai Murid</h3>
+
+    <div class="tabs">
+        <div class="tab active" id="tab-guru" onclick="pilihTab('guru')">👨‍🏫 Guru</div>
+        <div class="tab" id="tab-murid" onclick="pilihTab('murid')">🎓 Murid</div>
+    </div>
+
+    <div id="error-msg" class="error-msg" style="display:none;"></div>
+
+    <!-- LOGIN GURU -->
+    <form class="pane active" id="pane-guru" onsubmit="masukGuru(event)">
+        <div class="form-group">
+            <label for="password">Masukkan Kata Sandi</label>
+            <input type="password" id="password" placeholder="••••" autocomplete="current-password" autofocus>
+        </div>
+        <button type="submit" class="btn-login">Masuk</button>
+    </form>
+
+    <!-- LOGIN MURID -->
+    <form class="pane" id="pane-murid" onsubmit="masukMurid(event)">
+        <div class="form-group">
+            <label for="namaMurid">Pilih Nama Anda</label>
+            <select id="namaMurid" required>
+                <option value="">— memuat daftar murid —</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nis">Nomor Induk Siswa (NIS)</label>
+            <input type="password" id="nis" inputmode="numeric" placeholder="Contoh: 3262" autocomplete="off">
+        </div>
+        <button type="submit" class="btn-login">Masuk</button>
+    </form>
+
+    <div class="hint" id="hintLokal"></div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script>
+    function tampilkanError(t) {
+        const el = document.getElementById('error-msg');
+        el.style.display = t ? 'block' : 'none';
+        el.textContent = t || '';
+    }
+
+    function pilihTab(peran) {
+        document.getElementById('tab-guru').classList.toggle('active', peran === 'guru');
+        document.getElementById('tab-murid').classList.toggle('active', peran === 'murid');
+        document.getElementById('pane-guru').classList.toggle('active', peran === 'guru');
+        document.getElementById('pane-murid').classList.toggle('active', peran === 'murid');
+        tampilkanError('');
+        document.getElementById(peran === 'guru' ? 'password' : 'namaMurid').focus();
+    }
+
+    function isiDaftarMurid(db, pertahankan) {
+        const sel = document.getElementById('namaMurid');
+        const urut = db.students.slice().sort((a, b) => a.name.localeCompare(b.name, 'id'));
+        if (!urut.length) {
+            sel.innerHTML = '<option value="">— belum ada data murid —</option>';
+            return;
+        }
+        sel.innerHTML = '<option value="">— pilih nama Anda —</option>' +
+            urut.map(s => `<option value="${Util.esc(s.name)}">${Util.esc(s.name)}</option>`).join('');
+        if (pertahankan) sel.value = pertahankan;
+    }
+
+    async function masukGuru(e) {
+        e.preventDefault();
+        const pass = document.getElementById('password').value;
+        if (Auth.loginGuru(pass)) {
+            sessionStorage.setItem('nilai_role', 'guru');
+            location.href = 'input.html';
+        } else {
+            tampilkanError('Kata sandi yang Anda masukkan salah!');
+        }
+    }
+
+    async function masukMurid(e) {
+        e.preventDefault();
+        const nama = document.getElementById('namaMurid').value;
+        const nis = document.getElementById('nis').value;
+        if (!nama) return tampilkanError('Silakan pilih nama Anda terlebih dahulu.');
+        const hasil = Auth.loginMurid(nama, nis);
+        if (hasil.ok) location.href = 'murid.html';
+        else tampilkanError(hasil.msg);
+    }
+
+    (async function () {
+        if (Auth.role()) {
+            location.replace(Auth.role() === 'murid' ? 'murid.html' : 'input.html');
+            return;
+        }
+        const db = await Store.init();
+        isiDaftarMurid(db, '');
+
+        Store.onRemote(d => isiDaftarMurid(d, document.getElementById('namaMurid').value));
+        Store.onStatus((tipe, teks) => {
+            document.getElementById('hintLokal').innerHTML =
+                (tipe === 'err' ? '⚠️ ' + Util.esc(teks) : 'Data murid diperbarui otomatis dari server.');
+        });
+        Store.mulaiPolling();
+
+        if (!Store.repoSlug()) {
+            document.getElementById('hintLokal').innerHTML =
+                'Mode lokal: repo GitHub belum diatur di <b>js/config.js</b>.';
+        }
+    })();
+</script>
+</body>
+</html>

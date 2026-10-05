@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekapitulasi Nilai Murid</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="nav-container"></div>
+
+<style>
+    .rekap-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: center; margin-bottom: 30px; }
+    .rekap-table th, .rekap-table td { border: 1px solid #333; padding: 8px 5px; text-align: center; }
+    .rekap-table th { background-color: #2c3e50; color: white; }
+    .rekap-table td.nama-murid { text-align: left !important; font-weight: bold; }
+    .col-na { font-weight: bold; background-color: #d4edda; color: #155724; }
+
+    .kop-surat { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 20px; text-align: center; font-weight: bold; }
+    .kop-surat img { width: 80px; height: auto; }
+    .kop-text h3 { margin: 0; font-size: 16px; font-weight: bold; }
+    .kop-text h2 { margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+    .kop-text p { margin: 2px 0 0 0; font-size: 12px; font-weight: bold; }
+
+    .footer-ttd { display: flex; justify-content: space-between; margin-top: 30px; text-align: center; font-size: 14px; page-break-inside: avoid; }
+    .box-ttd { width: 40%; }
+    .nama-ttd { font-weight: bold; text-decoration: underline; margin-bottom: 2px; margin-top: 70px; }
+
+    @media print {
+        @page { size: A4 portrait; margin: 1cm; }
+        .no-print, .nav-container { display: none !important; }
+        body { background: white; padding: 0; color: #000; }
+        .container { margin: 0; padding: 0; box-shadow: none; max-width: 100%; }
+        .rekap-table th { background-color: #ddd !important; color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .col-na { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+</style>
+
+<h2 style="text-align: center; margin-bottom: 5px; text-transform: uppercase; font-size: 18px;" id="judulRekap"></h2>
+<p style="text-align: center; margin-top:0; font-size: 14px; font-weight: bold;" id="judulMapel"></p>
+
+<div class="no-print" style="margin-bottom: 20px; background: #e2e8f0; padding: 15px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; gap: 10px;">
+        <select id="selSubject" onchange="gantiFilter()" style="padding: 6px; border-radius: 4px;"></select>
+        <select id="selSemester" onchange="gantiFilter()" style="padding: 6px; border-radius: 4px;"></select>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Cetak Rekap</button>
+</div>
+
+<div id="wadahIsi">Memuat data...</div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/header.js"></script>
+<script>
+    let db, subject, semester;
+
+    function bacaURL() {
+        const p = new URLSearchParams(location.search);
+        subject = window.SUBJECTS.includes(p.get('subject')) ? p.get('subject') : 'PKn';
+        semester = window.SEMESTERS.includes(p.get('semester')) ? p.get('semester') : 'Ganjil';
+    }
+
+    function gantiFilter() {
+        subject = document.getElementById('selSubject').value;
+        semester = document.getElementById('selSemester').value;
+        history.replaceState(null, '', `rekap.html?subject=${encodeURIComponent(subject)}&semester=${encodeURIComponent(semester)}`);
+        render();
+    }
+
+    function kopSurat(c) {
+        if (c.gunakan_kop !== 'ya') return '';
+        const kiri = c.logo_kiri ? `<img src="${Util.esc(c.logo_kiri)}" alt="Logo Kiri">` : '';
+        const kanan = c.logo_kanan ? `<img src="${Util.esc(c.logo_kanan)}" alt="Logo Kanan">` : '';
+        return `<div class="kop-surat">
+            <div>${kiri}</div>
+            <div class="kop-text">
+                <h3>${Util.esc(c.instansi_1 || '')}</h3>
+                <h3>${Util.esc(c.instansi_2 || '')}</h3>
+                <h2>${Util.esc(c.nama_sekolah || '')}</h2>
+                <p>${Util.esc(c.alamat_sekolah || '')}</p>
+                <p>Email: ${Util.esc(c.email_sekolah || '')}</p>
+            </div>
+            <div>${kanan}</div>
+        </div>`;
+    }
+
+    function render() {
+        const c = db.config;
+        document.getElementById('judulRekap').textContent =
+            `REKAPITULASI NILAI MURID KELAS III SEMESTER ${semester.toUpperCase()}`;
+        document.getElementById('judulMapel').textContent = 'Mata Pelajaran: ' + subject;
+
+        const murid = db.students.slice().sort((a, b) => a.name.localeCompare(b.name, 'id'));
+
+        const baris = murid.map((s, i) => {
+            const g = Util.nilai(db, s.id, subject, semester);
+            const na = Util.hitungNA(g);
+            return `<tr>
+                <td>${i + 1}</td>
+                <td class="nama-murid">${Util.esc(s.name)}</td>
+                <td>${Util.tampilNilai(g && g.ph1)}</td>
+                <td>${Util.tampilNilai(g && g.ph2)}</td>
+                <td>${Util.tampilNilai(g && g.ph3)}</td>
+                <td>${Util.tampilNilai(g && g.ph4)}</td>
+                <td>${Util.tampilNilai(g && g.ats)}</td>
+                <td>${Util.tampilNilai(g && g.aas)}</td>
+                <td class="col-na">${na > 0 ? Math.round(na) : 0}</td>
+            </tr>`;
+        }).join('');
+
+        document.getElementById('wadahIsi').innerHTML = `
+            ${kopSurat(c)}
+            <table class="rekap-table">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">No</th>
+                        <th style="width: 25%; text-align: left;">Nama</th>
+                        <th>PH1</th><th>PH2</th><th>PH3</th><th>PH4</th>
+                        <th>ATS</th><th>AAS</th>
+                        <th class="col-na">NA</th>
+                    </tr>
+                </thead>
+                <tbody>${baris || '<tr><td colspan="9">Belum ada data murid.</td></tr>'}</tbody>
+            </table>
+
+            <div class="footer-ttd">
+                <div class="box-ttd">
+                    <p>Mengetahui,<br>${Util.esc(c.jabatan_kasek || 'Kepala Sekolah')}</p>
+                    <div class="nama-ttd">${Util.esc(c.nama_kasek || '...........................')}</div>
+                    <div>NIP. ${Util.esc(c.nip_kasek || '...........................')}</div>
+                </div>
+                <div class="box-ttd">
+                    <p>${Util.esc(c.nama_kota || '...............')}, ${Util.tglIndo()}<br>${Util.esc(c.jabatan_walas || 'Guru Kelas')}</p>
+                    <div class="nama-ttd">${Util.esc(c.nama_walas || '...........................')}</div>
+                    <div>NIP. ${Util.esc(c.nip_walas || '...........................')}</div>
+                </div>
+            </div>`;
+    }
+
+    (async function () {
+        if (!Header.init('rekap')) return;
+        bacaURL();
+        db = await Store.init();
+
+        Util.isiSelect(document.getElementById('selSubject'), window.SUBJECTS, subject);
+        Util.isiSelect(document.getElementById('selSemester'), window.SEMESTERS, semester);
+        render();
+
+        Store.onRemote(d => { db = d; render(); });
+        Store.mulaiPolling();
+    })();
+</script>
+</div>
+</body>
+</html>

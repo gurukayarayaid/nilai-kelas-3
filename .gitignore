@@ -1,0 +1,26 @@
+# --- Runtime PHP & berkas lama (TIDAK diunggah ke GitHub Pages) ---
+*.php
+*.dll
+*.exe
+*.lib
+*.bat
+*.phar
+php.ini
+ext/
+lib/
+dev/
+extras/
+uploads/
+*.db
+*.sqbpro
+desktop.ini
+
+# --- Data & dokumen lokal yang tidak boleh ikut terbuka publik ---
+*.csv
+NAMA_MURID.txt
+nomor_NIS.png
+menu hapus semua murid.txt
+
+# --- Sistem ---
+.DS_Store
+Thumbs.db

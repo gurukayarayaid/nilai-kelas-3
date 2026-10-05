@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leger Nilai Murid</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="nav-container"></div>
+
+<style>
+    .leger-container { max-width: 100% !important; margin: 20px 10px !important; padding: 15px !important; }
+    .leger-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; margin-bottom: 30px; }
+    .leger-table th, .leger-table td { border: 1px solid #333; padding: 6px 4px; text-align: center; }
+    .leger-table th { background-color: #2c3e50; color: white; font-size: 11px; }
+    .leger-table td.nama-murid { text-align: left !important; font-weight: bold; white-space: nowrap; }
+    .col-total { font-weight: bold; background-color: #f8f9fa; }
+    .col-rata { font-weight: bold; background-color: #d4edda; color: #155724; }
+
+    .kop-surat { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #000; padding-bottom: 10px; margin-bottom: 20px; text-align: center; font-weight: bold; }
+    .kop-surat img { width: 75px; height: auto; }
+    .kop-text h3 { margin: 0; font-size: 15px; font-weight: bold; }
+    .kop-text h2 { margin: 0; font-size: 20px; font-weight: bold; letter-spacing: 1px; }
+    .kop-text p { margin: 2px 0 0 0; font-size: 11px; font-weight: bold; }
+
+    .footer-ttd { display: flex; justify-content: space-between; margin-top: 30px; text-align: center; font-size: 13px; page-break-inside: avoid; }
+    .box-ttd { width: 35%; }
+    .nama-ttd { font-weight: bold; text-decoration: underline; margin-bottom: 2px; margin-top: 60px; }
+
+    @media print {
+        @page { size: 33.02cm 21.59cm landscape; margin: 1cm; }
+        .no-print, .nav-container { display: none !important; }
+        body { background: white; padding: 0; color: #000; }
+        .container { margin: 0 !important; padding: 0 !important; box-shadow: none !important; max-width: 100% !important; }
+        .leger-table { font-size: 11px; }
+        .leger-table th { background-color: #ddd !important; color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .col-rata, .col-total { background-color: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+</style>
+
+<h2 style="text-align: center; margin-bottom: 5px; text-transform: uppercase; font-size: 18px;" id="judulLeger"></h2>
+
+<div class="no-print" style="margin: 20px auto; background: #e2e8f0; padding: 15px; border-radius: 5px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 20px; max-width: 700px;">
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <label style="font-weight: bold; font-size: 14px;">Filter Semester:</label>
+        <select id="selSemester" onchange="gantiSemester()" style="padding: 6px; border-radius: 4px;"></select>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn btn-success" onclick="unduhExcel()">📥 Download Excel</button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Cetak Leger</button>
+    </div>
+</div>
+
+<div id="wadahIsi">Memuat data...</div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/header.js"></script>
+<script>
+    let db, semester;
+
+    function bacaURL() {
+        const p = new URLSearchParams(location.search);
+        semester = window.SEMESTERS.includes(p.get('semester')) ? p.get('semester') : 'Ganjil';
+    }
+
+    function gantiSemester() {
+        semester = document.getElementById('selSemester').value;
+        history.replaceState(null, '', 'leger.html?semester=' + encodeURIComponent(semester));
+        render();
+    }
+
+    function kopSurat(c) {
+        if (c.gunakan_kop !== 'ya') return '';
+        const kiri = c.logo_kiri ? `<img src="${Util.esc(c.logo_kiri)}" alt="Logo Kiri">` : '';
+        const kanan = c.logo_kanan ? `<img src="${Util.esc(c.logo_kanan)}" alt="Logo Kanan">` : '';
+        return `<div class="kop-surat">
+            <div>${kiri}</div>
+            <div class="kop-text">
+                <h3>${Util.esc(c.instansi_1 || '')}</h3>
+                <h3>${Util.esc(c.instansi_2 || '')}</h3>
+                <h2>${Util.esc(c.nama_sekolah || '')}</h2>
+                <p>${Util.esc(c.alamat_sekolah || '')}</p>
+                <p>Email: ${Util.esc(c.email_sekolah || '')}</p>
+            </div>
+            <div>${kanan}</div>
+        </div>`;
+    }
+
+    function render() {
+        const c = db.config;
+        const mapel = window.SUBJECTS;
+        document.getElementById('judulLeger').textContent =
+            `LEGER NILAI MURID KELAS III SEMESTER ${semester.toUpperCase()}`;
+
+        const murid = db.students.slice().sort((a, b) => a.name.localeCompare(b.name, 'id'));
+
+        const baris = murid.map((s, i) => {
+            let total = 0;
+            const sel = mapel.map(m => {
+                const na = Util.hitungNA(Util.nilai(db, s.id, m, semester));
+                const bulat = na > 0 ? Math.round(na) : 0;
+                total += bulat;
+                return `<td>${bulat > 0 ? bulat : '-'}</td>`;
+            }).join('');
+            const rata = total > 0 ? (total / mapel.length) : 0;
+            return `<tr>
+                <td>${i + 1}</td>
+                <td class="nama-murid">${Util.esc(s.name)}</td>
+                ${sel}
+                <td class="col-total">${total > 0 ? total : '-'}</td>
+                <td class="col-rata">${rata > 0 ? rata.toFixed(1) : '-'}</td>
+            </tr>`;
+        }).join('');
+
+        document.getElementById('wadahIsi').innerHTML = `
+            ${kopSurat(c)}
+            <table class="leger-table" id="tabelLeger">
+                <thead>
+                    <tr>
+                        <th style="width: 3%;">No</th>
+                        <th style="width: 18%; text-align: left;">Nama Murid</th>
+                        ${mapel.map(m => `<th>${Util.esc(m)}</th>`).join('')}
+                        <th style="width: 6%;">Total</th>
+                        <th style="width: 6%;">Rata-rata</th>
+                    </tr>
+                </thead>
+                <tbody>${baris || '<tr><td colspan="' + (mapel.length + 4) + '">Belum ada data murid.</td></tr>'}</tbody>
+            </table>
+
+            <div class="footer-ttd">
+                <div class="box-ttd">
+                    <p>Mengetahui,<br>${Util.esc(c.jabatan_kasek || 'Kepala Sekolah')}</p>
+                    <div class="nama-ttd">${Util.esc(c.nama_kasek || '...........................')}</div>
+                    <div>NIP. ${Util.esc(c.nip_kasek || '...........................')}</div>
+                </div>
+                <div class="box-ttd">
+                    <p>${Util.esc(c.nama_kota || '...............')}, ${Util.tglIndo()}<br>${Util.esc(c.jabatan_walas || 'Guru Kelas')}</p>
+                    <div class="nama-ttd">${Util.esc(c.nama_walas || '...........................')}</div>
+                    <div>NIP. ${Util.esc(c.nip_walas || '...........................')}</div>
+                </div>
+            </div>`;
+    }
+
+    function unduhExcel() {
+        const tabel = document.getElementById('tabelLeger');
+        const wb = XLSX.utils.table_to_book(tabel, { sheet: 'Leger Nilai' });
+        XLSX.writeFile(wb, 'Leger_Nilai_Semester_' + semester + '.xlsx');
+    }
+
+    document.querySelector('.container').classList.add('leger-container');
+
+    (async function () {
+        if (!Header.init('leger')) return;
+        bacaURL();
+        db = await Store.init();
+
+        Util.isiSelect(document.getElementById('selSemester'), window.SEMESTERS, semester);
+        render();
+
+        Store.onRemote(d => { db = d; render(); });
+        Store.mulaiPolling();
+    })();
+</script>
+</div>
+</body>
+</html>

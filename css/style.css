@@ -1,0 +1,45 @@
+/* ============ GAYA DASAR (dipakai semua halaman) ============ */
+body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f6f9; color: #333; }
+.container { max-width: 1100px; background: #fff; padding: 30px; margin: 20px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); position: relative; }
+h2, h3 { color: #2c3e50; margin-top: 0; }
+
+/* Menu hamburger */
+.nav-container { position: absolute; top: 20px; right: 20px; z-index: 1000; display: flex; align-items: center; gap: 10px; }
+.hamburger { font-size: 30px; cursor: pointer; background: none; border: none; color: #2c3e50; }
+.menu-items { display: none; position: absolute; right: 0; top: 40px; background: #fff; min-width: 240px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
+.menu-items a { display: block; padding: 12px 16px; text-decoration: none; color: #333; font-size: 14px; border-bottom: 1px solid #eee; }
+.menu-items a:hover { background-color: #f1f1f1; color: #007bff; }
+.menu-items a.active { background-color: #e7f1ff; color: #007bff; font-weight: bold; }
+.show { display: block; }
+
+/* Tombol */
+.btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 14px; display: inline-block; color: white; }
+.btn-success { background: #28a745; }
+.btn-primary { background: #007bff; }
+.btn-warning { background: #f0ad4e; }
+.btn-danger { background: #dc3545; }
+.btn:hover { filter: brightness(0.95); }
+
+/* Tabel */
+table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fff; }
+th, td { border: 1px solid #dee2e6; padding: 10px 12px; text-align: left; font-size: 14px; }
+th { background-color: #343a40; color: white; }
+tr:nth-child(even) { background-color: #f8f9fa; }
+
+/* Status sinkronisasi */
+.sync-pill { font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; background: #e9ecef; color: #495057; white-space: nowrap; }
+.sync-pill.ok { background: #d4edda; color: #155724; }
+.sync-pill.warn { background: #fff3cd; color: #856404; }
+.sync-pill.err { background: #f8d7da; color: #721c24; }
+.sync-pill.busy { background: #e2e8f0; color: #4a5568; }
+
+.alert-banner { padding: 12px; border-radius: 5px; margin-bottom: 15px; font-weight: bold; font-size: 14px; }
+.alert-ok { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.alert-err { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+.alert-info { background: #fff3cd; color: #856404; border: 1px solid #ffe8a1; }
+
+@media print {
+    .nav-container, .btn, form, .no-print { display: none !important; }
+    body { background: white; padding: 0; }
+    .container { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+}

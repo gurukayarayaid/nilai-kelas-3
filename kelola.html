@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Data Murid</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="nav-container"></div>
+
+<style>
+    .kartu-form { background: #f8f9fa; padding: 20px; border: 1px solid #dee2e6; border-radius: 5px; }
+    .input-utama { width: 100%; padding: 9px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+    .tabel-murid td, .tabel-murid th { padding: 7px 10px; font-size: 13px; }
+    .tabel-murid input { width: 110px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
+    .btn-kecil { padding: 5px 10px; font-size: 12px; }
+</style>
+
+<h2>Kelola Data Murid</h2>
+
+<div id="notifikasi"></div>
+
+<div style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
+    <!-- Upload Massal -->
+    <div class="kartu-form" style="flex: 1; min-width: 300px;">
+        <h3 style="margin-top: 0;">1. Upload Massal (.txt/.csv)</h3>
+        <p style="font-size: 13px; color: #555;">Satu baris satu murid. Bisa hanya nama, atau format <b>NAMA,NIS</b>.</p>
+        <input type="file" id="fileMurid" accept=".txt,.csv" style="margin-bottom: 15px; width: 100%;">
+        <button type="button" class="btn btn-success" style="width: 100%;" onclick="uploadMassal()">📂 Mulai Upload</button>
+    </div>
+
+    <!-- Tambah Manual -->
+    <div class="kartu-form" style="flex: 1; min-width: 300px;">
+        <h3 style="margin-top: 0;">2. Tambah Manual</h3>
+        <p style="font-size: 13px; color: #555;">NIS dipakai murid untuk masuk ke aplikasi.</p>
+        <input type="text" id="namaBaru" class="input-utama" placeholder="Contoh: AHMAD DHAFIN">
+        <input type="text" id="nisBaru" class="input-utama" placeholder="Contoh: 3262 (Nomor Induk Siswa)">
+        <button type="button" class="btn btn-primary" style="width: 100%;" onclick="tambahManual()">➕ Simpan Murid Baru</button>
+    </div>
+</div>
+
+<!-- Daftar murid -->
+<div style="margin-bottom: 30px;">
+    <h3>Daftar Murid (<span id="jmlMurid">0</span>)</h3>
+    <p style="font-size:13px; color:#555;">Ubah NIS lalu tekan <b>Simpan</b>. NIS wajib diisi agar murid bisa login.</p>
+    <table class="tabel-murid" id="tabelMurid">
+        <thead>
+            <tr><th style="width:5%;">No</th><th>Nama</th><th style="width:18%;">NIS</th><th style="width:22%;">Aksi</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<!-- Zona berbahaya -->
+<div style="background:#fff5f5; padding:20px; border: 1px solid #fed7d7; border-radius:5px; border-left: 5px solid #e53e3e;">
+    <h3 style="color: #c53030; margin-top: 0;">⚠️ Zona Berbahaya (Reset Data)</h3>
+    <p style="font-size: 14px; color: #555; margin-bottom: 20px;">Tindakan di bawah ini permanen dan langsung ter-<i>push</i> ke web.</p>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <button type="button" class="btn btn-warning" style="background-color: #f6ad55; color: #000; border: 1px solid #dd6b20;" onclick="kosongkanNilai()">
+            🗑️ Kosongkan Semua Nilai
+        </button>
+        <button type="button" class="btn btn-danger" onclick="hapusSemuaMurid()">
+            🚨 Hapus Semua Data Murid &amp; Nilai
+        </button>
+    </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/header.js"></script>
+<script>
+    let db;
+
+    function notif(tipe, teks) {
+        document.getElementById('notifikasi').innerHTML =
+            `<div class="alert-banner alert-${tipe}">${teks}</div>`;
+        setTimeout(() => { document.getElementById('notifikasi').innerHTML = ''; }, 6000);
+    }
+
+    function renderTabel() {
+        const tb = document.querySelector('#tabelMurid tbody');
+        const urut = db.students.slice().sort((a, b) => a.name.localeCompare(b.name, 'id'));
+        document.getElementById('jmlMurid').textContent = db.students.length;
+
+        tb.innerHTML = urut.map((s, i) => `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${Util.esc(s.name)}</td>
+                <td><input type="text" id="nis-${s.id}" value="${Util.esc(s.nis || '')}" placeholder="belum diisi"></td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-kecil" onclick="simpanNis(${s.id})">💾 Simpan</button>
+                    <button type="button" class="btn btn-danger btn-kecil" onclick="hapusMurid(${s.id})">🗑️ Hapus</button>
+                </td>
+            </tr>`).join('') || '<tr><td colspan="4">Belum ada data murid.</td></tr>';
+    }
+
+    function simpanNis(id) {
+        const v = document.getElementById('nis-' + id).value.trim();
+        Store.ubah(d => {
+            const s = d.students.find(x => x.id === id);
+            if (s) s.nis = v;
+        });
+        notif('ok', 'NIS diperbarui & sedang disinkronkan ke web.');
+    }
+
+    function hapusMurid(id) {
+        const s = db.students.find(x => x.id === id);
+        if (!confirm('Hapus murid "' + s.name + '" beserta SELURUH nilainya?')) return;
+        Store.ubah(d => {
+            d.students = d.students.filter(x => x.id !== id);
+            d.grades = d.grades.filter(g => g.student_id !== id);
+        });
+        renderTabel();
+        notif('ok', 'Murid berhasil dihapus.');
+    }
+
+    function tambahManual() {
+        const nama = document.getElementById('namaBaru').value.trim().toUpperCase();
+        const nis = document.getElementById('nisBaru').value.trim();
+        if (!nama) return notif('err', 'Nama murid belum diisi.');
+
+        const ada = db.students.some(s => s.name.toUpperCase() === nama);
+        if (ada) return notif('err', `Nama <strong>${Util.esc(nama)}</strong> sudah terdaftar.`);
+
+        Store.ubah(d => {
+            const id = d.students.reduce((m, s) => Math.max(m, s.id), 0) + 1;
+            d.students.push({ id: id, name: nama, nis: nis });
+        });
+        document.getElementById('namaBaru').value = '';
+        document.getElementById('nisBaru').value = '';
+        renderTabel();
+        notif('ok', `Murid <strong>${Util.esc(nama)}</strong> berhasil ditambahkan.`);
+    }
+
+    function uploadMassal() {
+        const file = document.getElementById('fileMurid').files[0];
+        if (!file) return notif('err', 'Pilih file terlebih dahulu.');
+
+        const pembaca = new FileReader();
+        pembaca.onload = function (e) {
+            const baris = String(e.target.result).split(/\r?\n/);
+            let tambah = 0;
+            Store.ubah(d => {
+                let id = d.students.reduce((m, s) => Math.max(m, s.id), 0);
+                baris.forEach(b => {
+                    const teks = b.trim();
+                    if (!teks || teks.toLowerCase().startsWith('nama')) return;
+                    const pisah = teks.split(/[;,\t]/);
+                    const nama = (pisah[0] || '').trim().toUpperCase();
+                    const nis = (pisah[1] || '').trim();
+                    if (!nama) return;
+                    if (d.students.some(s => s.name.toUpperCase() === nama)) return;
+                    id++;
+                    d.students.push({ id: id, name: nama, nis: nis });
+                    tambah++;
+                });
+            });
+            renderTabel();
+            notif('ok', `Berhasil menambahkan <strong>${tambah}</strong> murid baru!`);
+        };
+        pembaca.readAsText(file);
+    }
+
+    function kosongkanNilai() {
+        if (!confirm('YAKIN INGIN MENGOSONGKAN SEMUA NILAI?\n\nSemua nilai (PH1-4, ATS, AAS) seluruh murid akan TERHAPUS.\nDaftar nama murid TETAP ADA.')) return;
+        Store.ubah(d => { d.grades = []; });
+        notif('ok', 'Seluruh data nilai berhasil dikosongkan.');
+    }
+
+    function hapusSemuaMurid() {
+        if (!confirm('PERINGATAN KERAS!\n\nYakin ingin MENGHAPUS SEMUA DATA MURID?\nIni menghapus seluruh nama murid BESERTA nilainya.')) return;
+        Store.ubah(d => { d.students = []; d.grades = []; });
+        renderTabel();
+        notif('ok', 'Seluruh data murid & nilai telah dihapus.');
+    }
+
+    (async function () {
+        if (!Header.init('kelola')) return;
+        db = await Store.init();
+        renderTabel();
+
+        Store.onRemote(d => { db = d; renderTabel(); });
+        Store.mulaiPolling();
+
+        if (!Store.token()) {
+            notif('info', 'Token GitHub belum diisi — perubahan hanya tersimpan di browser ini. Isi token di menu <b>⚙️ Pengaturan &amp; GitHub</b> agar langsung tampil di web murid.');
+        }
+    })();
+</script>
+</div>
+</body>
+</html>

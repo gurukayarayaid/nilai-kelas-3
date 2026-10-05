@@ -1,0 +1,133 @@
+{
+    "updatedAt": 1791178105000,
+    "config": {
+        "gunakan_kop": "ya",
+        "instansi_1": "PEMERINTAH KABUPATEN SIDOARJO",
+        "instansi_2": "DINAS PENDIDIKAN DAN KEBUDAYAAN",
+        "nama_sekolah": "SD NEGERI SEMAMBUNG",
+        "alamat_sekolah": "Desa Semambung, Jabon, Sidoarjo, Jawa Timur 61276",
+        "email_sekolah": "sdnsemambungjabon@gmail.com",
+        "nama_kota": "Jabon",
+        "jabatan_kasek": "Kepala Sekolah SD Negeri Semambung",
+        "jabatan_walas": "Guru Kelas III",
+        "nama_kasek": "YULIASIH, S.Pd.",
+        "nama_walas": "AGUK RUDIANTO, S.Pd.",
+        "nip_kasek": "197707152008012027",
+        "nip_walas": "198404052010011022",
+        "logo_kiri": "assets\/logo_kiri_1785291736.png",
+        "logo_kanan": "assets\/logo_kanan_1785291736.png"
+    },
+    "students": [
+        {
+            "id": 1,
+            "name": "ACHMAD DHAFIN KHALIF ALGHIFARI",
+            "nis": "3262"
+        },
+        {
+            "id": 2,
+            "name": "ALFIRA NAHDA RAFANDA",
+            "nis": "3263"
+        },
+        {
+            "id": 3,
+            "name": "ARSYILA ROMEESA FARZANA",
+            "nis": "3264"
+        },
+        {
+            "id": 4,
+            "name": "ASSYFA PUTRI NAURA ZASKIA",
+            "nis": "3265"
+        },
+        {
+            "id": 5,
+            "name": "ATIQAH FATIMATUS ZAHRA",
+            "nis": "3266"
+        },
+        {
+            "id": 6,
+            "name": "ELLVINO GAVRIEL ALVARO",
+            "nis": "3267"
+        },
+        {
+            "id": 7,
+            "name": "FALISA AMALIA PUTRI",
+            "nis": "3268"
+        },
+        {
+            "id": 8,
+            "name": "GIBRAN KEENANDRA ARDIANSYAH",
+            "nis": "3269"
+        },
+        {
+            "id": 9,
+            "name": "KANIA DWI NUR MAULIDDIAH",
+            "nis": "3270"
+        },
+        {
+            "id": 10,
+            "name": "MUHAMMAD ABDULLOH FADIL",
+            "nis": "3271"
+        },
+        {
+            "id": 11,
+            "name": "MUHAMMAD NATHAN HAFIZ PRADIPTA",
+            "nis": "3272"
+        },
+        {
+            "id": 12,
+            "name": "MUHAMMAD NAUFAL AL RAJABI",
+            "nis": "3273"
+        },
+        {
+            "id": 13,
+            "name": "MUHAMMAD RAKA ISLAMUDDIN",
+            "nis": "3274"
+        },
+        {
+            "id": 14,
+            "name": "MUHAMMAD RAKHA FATKHUL HALIM",
+            "nis": "3275"
+        },
+        {
+            "id": 15,
+            "name": "NAFISA AZZAHRA KHUSNANDAR",
+            "nis": "3276"
+        },
+        {
+            "id": 16,
+            "name": "NIKMATUL NISA",
+            "nis": "3277"
+        },
+        {
+            "id": 17,
+            "name": "OKTAVIA PUTRI GANESHA",
+            "nis": "3278"
+        },
+        {
+            "id": 18,
+            "name": "RAYSA NABILAH PUTRI",
+            "nis": "3279"
+        },
+        {
+            "id": 19,
+            "name": "RIKA ELVINA",
+            "nis": "3280"
+        },
+        {
+            "id": 20,
+            "name": "SAYYID MAULANA IBRAHIM",
+            "nis": "3281"
+        },
+        {
+            "id": 21,
+            "name": "TIKA ASSYIFAH ARRUM",
+            "nis": "3282"
+        },
+        {
+            "id": 22,
+            "name": "MUHAMAD RAHMADANI",
+            "nis": "3317"
+        }
+    ],
+    "grades": []
+}

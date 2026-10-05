@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Nilai Murid</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="nav-container"></div>
+
+<style>
+    .mode-cepat-container { max-width: 500px; margin: 40px auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #007bff; position: relative; }
+    .student-card { display: none; }
+    .student-card.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+    .nav-header-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+
+    .btn-nav { background: #f1f3f5; border: 1px solid #ced4da; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; color: #495057; transition: all 0.2s; }
+    .btn-nav:hover { background: #e2e8f0; color: #007bff; border-color: #a0aec0; }
+    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .nama-header { font-size: 24px; font-weight: bold; color: #333; margin-bottom: 5px; text-align: center; }
+    .absen-badge { background: #e9ecef; color: #495057; padding: 4px 10px; border-radius: 20px; font-size: 25px; font-weight: bold; }
+    .input-box { font-size: 28px; width: 100%; text-align: center; padding: 10px; font-weight: bold; color: #007bff; border: 2px solid #ced4da; border-radius: 6px; margin: 20px 0 10px 0; box-sizing: border-box; }
+    .input-box:focus { border-color: #007bff; outline: none; box-shadow: 0 0 8px rgba(0,123,255,0.25); }
+    .info-saldo { background: #f8f9fa; padding: 10px; border-radius: 6px; font-size: 14px; text-align: center; margin-bottom: 15px; }
+    .status-save { font-size: 12px; text-align: center; color: #28a745; height: 18px; font-weight: bold; }
+    .selesai-box { text-align: center; display: none; padding: 30px 10px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<!-- Tombol Keluar di Pojok Kiri Atas -->
+<div style="display: flex; justify-content: flex-start; align-items: center; background: #fff; padding: 10px 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px;">
+    <div><a href="#" onclick="Auth.logout();return false;" style="color: #e53e3e; text-decoration: none; font-weight: bold;">🚪 Keluar</a></div>
+</div>
+
+<h2>Input Nilai Murid (Mode Cepat Berurutan)</h2>
+
+<div class="no-print" style="margin-bottom: 20px; background: #e9ecef; padding: 15px; border-radius: 5px; display: flex; align-items: center; flex-wrap: wrap; gap: 15px;">
+    <form id="filterForm" onsubmit="return false;" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; width: 100%;">
+
+        <div>
+            <label style="display:block; font-size:12px; font-weight:bold; margin-bottom:3px;">Mapel:</label>
+            <select name="subject" id="selSubject" onchange="gantiFilter()" style="padding: 6px; border-radius:4px; border:1px solid #ccc;"></select>
+        </div>
+
+        <div>
+            <label style="display:block; font-size:12px; font-weight:bold; margin-bottom:3px;">Semester:</label>
+            <select name="semester" id="selSemester" onchange="gantiFilter()" style="padding: 6px; border-radius:4px; border:1px solid #ccc;"></select>
+        </div>
+
+        <div>
+            <label style="display:block; font-size:12px; font-weight:bold; margin-bottom:3px; color:#007bff;">Jenis Nilai (Input):</label>
+            <select name="field" id="selField" onchange="gantiFilter()" style="padding: 6px; border-radius:4px; border:2px solid #007bff; font-weight:bold;"></select>
+        </div>
+
+        <div style="margin-left: auto; font-size: 13px; color: #555; align-self: flex-end; padding-bottom: 5px;">
+            💡 Tekan <strong>ENTER</strong> untuk simpan & lanjut otomatis.
+        </div>
+    </form>
+</div>
+
+<div class="mode-cepat-container" id="kartuContainer"></div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/header.js"></script>
+<script>
+    let db;
+    let subject, semester, field;
+    let indexAktif = 0;
+
+    function bacaURL() {
+        const p = new URLSearchParams(location.search);
+        subject = window.SUBJECTS.includes(p.get('subject')) ? p.get('subject') : 'PKn';
+        semester = window.SEMESTERS.includes(p.get('semester')) ? p.get('semester') : 'Ganjil';
+        field = window.FIELDS_LABEL[p.get('field')] ? p.get('field') : 'ph1';
+    }
+
+    function tulisURL() {
+        const p = new URLSearchParams();
+        p.set('subject', subject); p.set('semester', semester); p.set('field', field);
+        history.replaceState(null, '', location.pathname + '?' + p.toString());
+    }
+
+    function gantiFilter() {
+        subject = document.getElementById('selSubject').value;
+        semester = document.getElementById('selSemester').value;
+        field = document.getElementById('selField').value;
+        indexAktif = 0;
+        tulisURL();
+        render();
+    }
+
+    function daftarMurid() {
+        return db.students.slice().sort((a, b) => a.id - b.id);
+    }
+
+    function render() {
+        const wadah = document.getElementById('kartuContainer');
+        const murid = daftarMurid();
+
+        if (!murid.length) {
+            wadah.innerHTML = '<p style="text-align:center; color:#888;">Belum ada data murid. Tambahkan lewat menu 👥 Kelola Data Murid.</p>';
+            return;
+        }
+
+        wadah.innerHTML = murid.map((s, i) => {
+            const g = Util.nilai(db, s.id, subject, semester);
+            const tampil = g && +g[field] > 0 ? +g[field] : '';
+            return `
+            <div class="student-card ${i === indexAktif ? 'active' : ''}" id="card-${i}" data-index="${i}">
+                <div class="nav-header-box">
+                    <button type="button" class="btn-nav btn-prev" ${i === 0 ? 'disabled' : ''}>⬅️ Sebelumnya</button>
+                    <span class="absen-badge">${i + 1}</span>
+                    <button type="button" class="btn-nav btn-next">Berikutnya ➡️</button>
+                </div>
+
+                <div style="text-align: right;">
+                    <span class="status-save" id="status-${i}"></span>
+                </div>
+
+                <div class="nama-header">${Util.esc(s.name)}</div>
+
+                <div class="info-saldo">
+                    Input Nilai untuk: <strong style="color: #007bff;">${window.FIELDS_LABEL[field]}</strong>
+                </div>
+
+                <input type="number"
+                       id="input-${i}"
+                       data-id="${s.id}"
+                       value="${tampil}"
+                       placeholder="Ketik nilai..."
+                       step="0.01" min="0" max="100"
+                       class="input-box">
+                <p style="font-size: 11px; color: #6c757d; text-align: center; margin: 0;">Skala nilai 0 s/d 100.</p>
+            </div>`;
+        }).join('') + `
+            <div class="selesai-box" id="box-selesai">
+                <h3 style="color: #28a745;">🎉 Semua Selesai!</h3>
+                <p>Seluruh input nilai <strong>${window.FIELDS_LABEL[field]}</strong> untuk <strong>${Util.esc(subject)}</strong> telah berhasil diproses.</p>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                    <button class="btn btn-primary" type="button" onclick="render()">🔄 Ulangi Pengecekan</button>
+                    <a href="rekap.html?subject=${encodeURIComponent(subject)}&semester=${encodeURIComponent(semester)}" class="btn btn-success">📊 Lihat Hasil Rekap</a>
+                </div>
+            </div>`;
+
+        pasangEvent(murid);
+        const inp = document.getElementById('input-' + indexAktif);
+        if (inp) { inp.focus(); inp.select(); }
+    }
+
+    function pindahKartu(current, next) {
+        const total = daftarMurid().length;
+        const kartu = document.getElementById('card-' + current);
+        if (next >= 0 && next < total) {
+            kartu.classList.remove('active');
+            const berikut = document.getElementById('card-' + next);
+            berikut.classList.add('active');
+            indexAktif = next;
+            const i = document.getElementById('input-' + next);
+            i.focus(); i.select();
+        } else if (next >= total) {
+            kartu.classList.remove('active');
+            document.getElementById('box-selesai').style.display = 'block';
+            indexAktif = total;
+        } else if (next < 0) {
+            kartu.classList.remove('active');
+            document.getElementById('card-0').classList.add('active');
+            indexAktif = 0;
+            const i = document.getElementById('input-0');
+            i.focus(); i.select();
+        }
+    }
+
+    function simpanNilai(i, selesai) {
+        const input = document.getElementById('input-' + i);
+        const status = document.getElementById('status-' + i);
+        const id = +input.getAttribute('data-id');
+        const nilai = input.value === '' ? 0 : Math.max(0, Math.min(100, parseFloat(input.value) || 0));
+
+        status.style.color = '#a0aec0';
+        status.textContent = 'Menyimpan...';
+
+        Store.ubah(d => Util.setNilai(d, id, subject, semester, field, nilai));
+
+        status.style.color = '#28a745';
+        status.textContent = '✓ Tersimpan';
+        setTimeout(() => { status.textContent = ''; }, 1500);
+        if (selesai) selesai();
+    }
+
+    function pasangEvent(murid) {
+        murid.forEach((s, i) => {
+            const input = document.getElementById('input-' + i);
+            const kartu = document.getElementById('card-' + i);
+            const btnNext = kartu.querySelector('.btn-next');
+            const btnPrev = kartu.querySelector('.btn-prev');
+
+            input.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    simpanNilai(i, () => pindahKartu(i, i + 1));
+                }
+            });
+            btnNext.addEventListener('click', () => simpanNilai(i, () => pindahKartu(i, i + 1)));
+            btnPrev.addEventListener('click', () => pindahKartu(i, i - 1));
+        });
+    }
+
+    /* Perbarui nilai di kartu bila ada data baru dari server (tanpa mengganggu yang sedang diketik) */
+    function segarkanNilai(d) {
+        db = d;
+        daftarMurid().forEach((s, i) => {
+            const input = document.getElementById('input-' + i);
+            if (!input || document.activeElement === input) return;
+            const g = Util.nilai(db, s.id, subject, semester);
+            input.value = g && +g[field] > 0 ? +g[field] : '';
+        });
+    }
+
+    (async function () {
+        if (!Header.init('input')) return;
+        bacaURL();
+        db = await Store.init();
+
+        Util.isiSelect(document.getElementById('selSubject'), window.SUBJECTS, subject);
+        Util.isiSelect(document.getElementById('selSemester'), window.SEMESTERS, semester);
+        document.getElementById('selField').innerHTML = Object.keys(window.FIELDS_LABEL)
+            .map(k => `<option value="${k}"${k === field ? ' selected' : ''}>${window.FIELDS_LABEL[k]}</option>`).join('');
+
+        tulisURL();
+        render();
+
+        Store.onRemote(segarkanNilai);
+        Store.mulaiPolling();
+    })();
+</script>
+</div>
+</body>
+</html>

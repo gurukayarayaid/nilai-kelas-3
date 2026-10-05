@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan &amp; GitHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="nav-container"></div>
+
+<style>
+    .form-settings-wrapper { max-width: 850px; margin: 0 auto; }
+    .form-settings-wrapper h2 { border-bottom: 2px solid #e5e7eb; padding-bottom: 12px; margin-top: 0; color: #1e3a8a; font-size: 22px; font-weight: 700; }
+    .section-title { font-weight: 700; font-size: 14px; margin: 25px 0 12px 0; color: #1e3a8a; border-bottom: 1px dashed #d1d5db; padding-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-group { display: flex; flex-direction: column; margin-bottom: 14px; }
+    .form-group label { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #4b5563; }
+    .form-group input[type="text"], .form-group input[type="password"], .form-group input[type="number"] { background-color: #fff; border: 1px solid #d1d5db; color: #111827; padding: 10px 12px; border-radius: 6px; font-size: 14px; }
+    .form-group input:focus { border-color: #1e3a8a; outline: none; }
+    .checkbox-group { display: flex; align-items: center; gap: 10px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 15px; font-weight: bold; color: #1e3a8a; }
+    .btn-save { padding: 10px 20px; background: #1e3a8a; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; width: 100%; margin-top: 15px; }
+    .btn-save:hover { background: #172554; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .preview-img { max-height: 55px; display: block; margin-top: 5px; border: 1px solid #cbd5e1; padding: 3px; background: #fff; border-radius: 4px; }
+    .panduan { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px 22px; font-size: 13.5px; line-height: 1.7; color: #334155; }
+    .panduan ol { margin: 8px 0; padding-left: 20px; }
+    .panduan code { background: #e2e8f0; padding: 1px 6px; border-radius: 4px; font-size: 12.5px; }
+    .status-lokasi { font-size: 13px; background: #eef2ff; border: 1px solid #c7d2fe; color: #3730a3; padding: 10px 12px; border-radius: 6px; font-weight: bold; }
+</style>
+
+<div class="form-settings-wrapper">
+    <h2>⚙️ Pengaturan Cetak &amp; GitHub</h2>
+    <div id="notifikasi"></div>
+
+    <!-- ================= GITHUB ================= -->
+    <div class="section-title">🌐 1. Sinkronisasi GitHub Pages (Data Real-Time)</div>
+
+    <div class="status-lokasi" id="statusRepo"></div>
+
+    <div class="grid-2" style="margin-top:14px;">
+        <div class="form-group">
+            <label>Personal Access Token (hanya tersimpan di browser ini)</label>
+            <input type="password" id="inputToken" placeholder="ghp_xxxxxxxx atau github_pat_xxxxxxxx" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Kode Repo (opsional, kosongkan = otomatis)</label>
+            <input type="text" id="inputRepo" placeholder="contoh: budi/nilai-kelas-3">
+        </div>
+    </div>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button type="button" class="btn btn-primary" onclick="simpanToken()">💾 Simpan Token</button>
+        <button type="button" class="btn btn-success" onclick="ujiKoneksi()">🔍 Uji Koneksi</button>
+        <button type="button" class="btn btn-warning" onclick="Store.tarik(false);">🔄 Tarik Data Sekarang</button>
+        <button type="button" class="btn btn-danger" onclick="hapusToken()">Hapus Token</button>
+    </div>
+
+    <div class="panduan" style="margin-top:18px;">
+        <strong>📘 Cara menyiapkan (sekali saja):</strong>
+        <ol>
+            <li>Buat repo baru di GitHub (mis. <code>nilai-kelas-3</code>) — boleh <b>Public</b> (murid bisa membaca) atau <b>Private</b>.</li>
+            <li>Buka GitHub → <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b>.</li>
+            <li>Atur <b>Repository access</b> = Only select repositories (pilih repo Anda), lalu di <b>Permissions → Contents</b> pilih <b>Read and write</b>. Generate lalu salin tokennya.</li>
+            <li>Tempel token di kolom atas lalu klik <b>Simpan Token</b>.</li>
+            <li>Push folder situs ini ke GitHub, lalu aktifkan <b>Pages</b> (Settings → Pages → Branch: <code>main</code>, folder <code>/ (root)</code>).</li>
+            <li>Selesai — nilai yang disimpan guru langsung terbaca murid (otomatis tiap 5 detik).</li>
+        </ol>
+        <b>Catatan:</b> token tidak pernah dikirim ke file repo, hanya disimpan di <code>localStorage</code> browser guru.
+        Untuk repo <b>Private</b>, murid tidak bisa membaca — gunakan repo <b>Public</b>.
+    </div>
+
+    <!-- ================= KOP ================= -->
+    <div class="section-title">🏢 2. Kop Surat &amp; Identitas Sekolah</div>
+
+    <form id="formCetak" onsubmit="simpanCetak(event)">
+        <div class="checkbox-group">
+            <input type="checkbox" id="gunakan_kop" name="gunakan_kop">
+            <label for="gunakan_kop">Gunakan Kop Surat Resmi pada Cetakan Rekap Nilai</label>
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label>Logo Kiri (Instansi)</label>
+                <input type="file" id="fileLogoKiri" accept="image/*">
+                <img id="prevKiri" class="preview-img" style="display:none;">
+            </div>
+            <div class="form-group">
+                <label>Logo Kanan (Sekolah)</label>
+                <input type="file" id="fileLogoKanan" accept="image/*">
+                <img id="prevKanan" class="preview-img" style="display:none;">
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group"><label>Instansi Baris 1</label><input type="text" name="instansi_1"></div>
+            <div class="form-group"><label>Instansi Baris 2</label><input type="text" name="instansi_2"></div>
+        </div>
+        <div class="form-group"><label>Nama Lembaga / Sekolah</label><input type="text" name="nama_sekolah"></div>
+        <div class="form-group"><label>Alamat Sekolah</label><input type="text" name="alamat_sekolah"></div>
+        <div class="form-group"><label>Email / Kontak Sekolah</label><input type="text" name="email_sekolah"></div>
+
+        <div class="section-title">✍️ 3. Lokasi &amp; Tanda Tangan (Footer)</div>
+        <div class="form-group"><label>Nama Wilayah / Kota (Untuk Tanggal)</label><input type="text" name="nama_kota"></div>
+
+        <div class="grid-2">
+            <div class="form-group"><label>Jabatan Kepala Sekolah</label><input type="text" name="jabatan_kasek"></div>
+            <div class="form-group"><label>Jabatan Wali Kelas</label><input type="text" name="jabatan_walas"></div>
+            <div class="form-group"><label>Nama Kepala Sekolah</label><input type="text" name="nama_kasek"></div>
+            <div class="form-group"><label>Nama Wali Kelas</label><input type="text" name="nama_walas"></div>
+            <div class="form-group"><label>NIP Kepala Sekolah</label><input type="text" name="nip_kasek"></div>
+            <div class="form-group"><label>NIP Wali Kelas</label><input type="text" name="nip_walas"></div>
+        </div>
+
+        <button type="submit" class="btn-save">💾 Simpan Pengaturan</button>
+    </form>
+
+    <div class="section-title">🧹 4. Data</div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button type="button" class="btn btn-success" onclick="unduhJSON()">📥 Unduh Cadangan (JSON)</button>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('fileJSON').click()">📤 Pulihkan dari File JSON</button>
+        <input type="file" id="fileJSON" accept="application/json" style="display:none;" onchange="pulihkanJSON(this)">
+        <button type="button" class="btn btn-danger" onclick="if(confirm('Hapus cadangan lokal di browser ini?')) Store.resetCache()">🗑️ Hapus Cadangan Lokal</button>
+    </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/header.js"></script>
+<script>
+    let db;
+
+    function notif(tipe, teks) {
+        document.getElementById('notifikasi').innerHTML = `<div class="alert-banner alert-${tipe}">${teks}</div>`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => { document.getElementById('notifikasi').innerHTML = ''; }, 7000);
+    }
+
+    function isiForm() {
+        const c = db.config;
+        document.getElementById('gunakan_kop').checked = c.gunakan_kop === 'ya';
+        document.querySelectorAll('#formCetak input[type="text"]').forEach(inp => {
+            if (inp.name) inp.value = c[inp.name] || '';
+        });
+        const kiri = document.getElementById('prevKiri');
+        const kanan = document.getElementById('prevKanan');
+        if (c.logo_kiri) { kiri.src = c.logo_kiri; kiri.style.display = 'block'; }
+        if (c.logo_kanan) { kanan.src = c.logo_kanan; kanan.style.display = 'block'; }
+
+        document.getElementById('statusRepo').innerHTML =
+            'Repo aktif: <b>' + Util.esc(Store.repoSlug() || '(belum diatur — mode lokal)') + '</b>' +
+            ' • File: <b>' + Util.esc(window.APP_CONFIG.path) + '</b>' +
+            ' • Token: <b>' + (Store.token() ? 'terisi ✓' : 'belum ada') + '</b>';
+
+        document.getElementById('inputToken').value = Store.token();
+        document.getElementById('inputRepo').value = Store.repoOverride();
+    }
+
+    async function simpanCetak(e) {
+        e.preventDefault();
+        Store.ubah(d => {
+            d.config.gunakan_kop = document.getElementById('gunakan_kop').checked ? 'ya' : 'tidak';
+            document.querySelectorAll('#formCetak input[type="text"]').forEach(inp => {
+                if (inp.name) d.config[inp.name] = inp.value;
+            });
+        });
+        notif('ok', 'Pengaturan berhasil disimpan & disinkronkan.');
+    }
+
+    function simpanToken() {
+        const t = document.getElementById('inputToken').value.trim();
+        const r = document.getElementById('inputRepo').value.trim();
+        Store.setToken(t);
+        Store.setRepoOverride(r);
+        isiForm();
+        if (t) Store.refresh();
+        notif('ok', 'Token & repo disimpan di browser ini.');
+    }
+
+    function hapusToken() {
+        Store.setToken('');
+        isiForm();
+        notif('info', 'Token dihapus dari browser ini.');
+    }
+
+    async function ujiKoneksi() {
+        try {
+            const hasil = await Store.ujiKoneksi();
+            notif('ok', 'Koneksi berhasil. ' + Util.esc(hasil));
+        } catch (e) {
+            notif('err', 'Gagal: ' + Util.esc(e.message));
+        }
+    }
+
+    async function unggahLogo(inputId, tujuan) {
+        const file = document.getElementById(inputId).files[0];
+        if (!file) return;
+        try {
+            const url = await Store.uploadBerkas('assets/' + file.name.replace(/[^\w.\-]/g, '_'), file);
+            Store.ubah(d => { d.config[tujuan] = url; });
+            notif('ok', 'Logo berhasil diunggah ke repo & dipakai di kop surat.');
+            isiForm();
+        } catch (e) {
+            notif('err', 'Gagal unggah logo: ' + Util.esc(e.message));
+        }
+    }
+
+    document.getElementById('fileLogoKiri').addEventListener('change', () => unggahLogo('fileLogoKiri', 'logo_kiri'));
+    document.getElementById('fileLogoKanan').addEventListener('change', () => unggahLogo('fileLogoKanan', 'logo_kanan'));
+
+    function unduhJSON() {
+        const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'cadangan-nilai-' + new Date().toISOString().slice(0, 10) + '.json';
+        a.click();
+    }
+
+    function pulihkanJSON(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const r = new FileReader();
+        r.onload = e => {
+            try {
+                const data = JSON.parse(e.target.result);
+                Store.ubah(d => {
+                    d.students = data.students || [];
+                    d.grades = data.grades || [];
+                    d.config = Object.assign({}, d.config, data.config || {});
+                });
+                db = Store.get();
+                isiForm();
+                notif('ok', 'Data berhasil dipulihkan dari file JSON.');
+            } catch (err) {
+                notif('err', 'File tidak valid.');
+            }
+        };
+        r.readAsText(file);
+        input.value = '';
+    }
+
+    (async function () {
+        if (!Header.init('pengaturan')) return;
+        db = await Store.init();
+        isiForm();
+
+        Store.onRemote(d => { db = d; isiForm(); });
+        Store.mulaiPolling();
+    })();
+</script>
+</div>
+</body>
+</html>
