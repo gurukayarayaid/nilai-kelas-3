@@ -30,6 +30,18 @@
     .box-ttd { width: 35%; }
     .nama-ttd { font-weight: bold; text-decoration: underline; margin-bottom: 2px; margin-top: 60px; }
 
+    @media (max-width: 640px) {
+        .leger-table th, .leger-table td { padding: 5px 3px; font-size: 11px; }
+        .kop-surat { flex-direction: column; gap: 6px; }
+        .kop-surat img { width: 54px; }
+        .kop-text h2 { font-size: 16px; }
+        .kop-text h3, .kop-text p { font-size: 11px; }
+        .footer-ttd { flex-direction: column; gap: 20px; }
+        .box-ttd { width: 100%; }
+        .nama-ttd { margin-top: 30px; }
+        .leger-container { margin: 8px 4px !important; padding: 10px 4px !important; }
+    }
+
     @media print {
         @page { size: 33.02cm 21.59cm landscape; margin: 1cm; }
         .no-print, .nav-container { display: none !important; }
@@ -120,18 +132,21 @@
 
         document.getElementById('wadahIsi').innerHTML = `
             ${kopSurat(c)}
-            <table class="leger-table" id="tabelLeger">
-                <thead>
-                    <tr>
-                        <th style="width: 3%;">No</th>
-                        <th style="width: 18%; text-align: left;">Nama Murid</th>
-                        ${mapel.map(m => `<th>${Util.esc(m)}</th>`).join('')}
-                        <th style="width: 6%;">Total</th>
-                        <th style="width: 6%;">Rata-rata</th>
-                    </tr>
-                </thead>
-                <tbody>${baris || '<tr><td colspan="' + (mapel.length + 4) + '">Belum ada data murid.</td></tr>'}</tbody>
-            </table>
+            <div class="table-scroll">
+                <table class="leger-table" id="tabelLeger" style="min-width: 820px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 3%;">No</th>
+                            <th style="width: 18%; text-align: left;">Nama Murid</th>
+                            ${mapel.map(m => `<th>${Util.esc(m)}</th>`).join('')}
+                            <th style="width: 6%;">Total</th>
+                            <th style="width: 6%;">Rata-rata</th>
+                        </tr>
+                    </thead>
+                    <tbody>${baris || '<tr><td colspan="' + (mapel.length + 4) + '">Belum ada data murid.</td></tr>'}</tbody>
+                </table>
+            </div>
+            <p class="geser-hp">➡️ Geser tabel ke samping untuk melihat seluruh mata pelajaran.</p>
 
             <div class="footer-ttd">
                 <div class="box-ttd">

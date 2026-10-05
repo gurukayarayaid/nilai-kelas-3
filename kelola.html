@@ -16,6 +16,13 @@
     .tabel-murid td, .tabel-murid th { padding: 7px 10px; font-size: 13px; }
     .tabel-murid input { width: 110px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
     .btn-kecil { padding: 5px 10px; font-size: 12px; }
+
+    @media (max-width: 640px) {
+        .tabel-murid td, .tabel-murid th { padding: 6px 5px; font-size: 12px; }
+        .tabel-murid input { width: 88px; }
+        .kartu-form { padding: 15px; }
+        .btn-kecil { padding: 9px 10px; font-size: 13px; }
+    }
 </style>
 
 <h2>Kelola Data Murid</h2>
@@ -45,12 +52,15 @@
 <div style="margin-bottom: 30px;">
     <h3>Daftar Murid (<span id="jmlMurid">0</span>)</h3>
     <p style="font-size:13px; color:#555;">Ubah NIS lalu tekan <b>Simpan</b>. NIS wajib diisi agar murid bisa login.</p>
-    <table class="tabel-murid" id="tabelMurid">
-        <thead>
-            <tr><th style="width:5%;">No</th><th>Nama</th><th style="width:18%;">NIS</th><th style="width:22%;">Aksi</th></tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="table-scroll">
+        <table class="tabel-murid" id="tabelMurid" style="min-width: 470px;">
+            <thead>
+                <tr><th style="width:5%;">No</th><th>Nama</th><th style="width:18%;">NIS</th><th style="width:22%;">Aksi</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <p class="geser-hp">➡️ Geser tabel ke samping untuk melihat kolom NIS &amp; aksi.</p>
 </div>
 
 <!-- Zona berbahaya -->

@@ -43,3 +43,46 @@ tr:nth-child(even) { background-color: #f8f9fa; }
     body { background: white; padding: 0; }
     .container { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
 }
+
+/* ============ TAMPILAN HP (Android / iPhone) ============ */
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+.table-scroll table { margin-top: 0; border: 0; }
+.table-scroll::-webkit-scrollbar { height: 8px; }
+.table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+.geser-hp { display: none; font-size: 12px; color: #6b7280; margin-top: 6px; }
+
+@media (max-width: 640px) {
+    body { padding: 6px; -webkit-text-size-adjust: 100%; }
+    .container { padding: 16px 12px; margin: 8px auto; border-radius: 6px; }
+    h2 { font-size: 17px; line-height: 1.35; }
+    h3 { font-size: 15px; }
+
+    /* Menu geser ke atas agar tidak menimpa judul */
+    .nav-container { position: static; justify-content: flex-end; margin-bottom: 4px; }
+    .menu-items { top: 42px; right: 0; min-width: 215px; }
+    .menu-items a { padding: 14px 15px; font-size: 15px; }
+    .sync-pill { font-size: 10px; padding: 3px 8px; }
+
+    /* Tabel: baca nyaman, geser ke samping bila lebar */
+    th, td { padding: 7px 6px; font-size: 13px; }
+    .geser-hp { display: block; }
+
+    /* Cegah zoom otomatis saat mengetik di Android */
+    input, select, textarea { font-size: 16px; }
+    .btn { padding: 11px 16px; font-size: 15px; }
+
+    .no-print { flex-wrap: wrap !important; gap: 8px !important; }
+}
+
+@media print {
+    .table-scroll { overflow: visible !important; border: 0 !important; }
+    .geser-hp { display: none !important; }
+}
+

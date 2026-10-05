@@ -23,6 +23,11 @@
         .error-msg { color: #e53e3e; font-size: 14px; text-align: center; margin-bottom: 15px; font-weight: bold; }
         .hint { font-size: 12px; color: #888; text-align: center; margin-top: 14px; line-height: 1.5; }
         .pane { display: none; } .pane.active { display: block; }
+        @media (max-width: 640px) {
+            body { padding: 12px; align-items: flex-start; padding-top: 40px; }
+            .login-card { padding: 26px 20px; }
+            .form-group input, .form-group select { padding: 13px; }
+        }
     </style>
 </head>
 <body>

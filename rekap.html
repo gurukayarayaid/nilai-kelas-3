@@ -27,6 +27,17 @@
     .box-ttd { width: 40%; }
     .nama-ttd { font-weight: bold; text-decoration: underline; margin-bottom: 2px; margin-top: 70px; }
 
+    @media (max-width: 640px) {
+        .rekap-table th, .rekap-table td { padding: 6px 3px; font-size: 12px; }
+        .kop-surat { flex-direction: column; gap: 6px; }
+        .kop-surat img { width: 54px; }
+        .kop-text h2 { font-size: 16px; }
+        .kop-text h3, .kop-text p { font-size: 11px; }
+        .footer-ttd { flex-direction: column; gap: 20px; }
+        .box-ttd { width: 100%; }
+        .nama-ttd { margin-top: 30px; }
+    }
+
     @media print {
         @page { size: A4 portrait; margin: 1cm; }
         .no-print, .nav-container { display: none !important; }
@@ -114,18 +125,21 @@
 
         document.getElementById('wadahIsi').innerHTML = `
             ${kopSurat(c)}
-            <table class="rekap-table">
-                <thead>
-                    <tr>
-                        <th style="width: 5%;">No</th>
-                        <th style="width: 25%; text-align: left;">Nama</th>
-                        <th>PH1</th><th>PH2</th><th>PH3</th><th>PH4</th>
-                        <th>ATS</th><th>AAS</th>
-                        <th class="col-na">NA</th>
-                    </tr>
-                </thead>
-                <tbody>${baris || '<tr><td colspan="9">Belum ada data murid.</td></tr>'}</tbody>
-            </table>
+            <div class="table-scroll">
+                <table class="rekap-table" style="min-width: 600px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">No</th>
+                            <th style="width: 25%; text-align: left;">Nama</th>
+                            <th>PH1</th><th>PH2</th><th>PH3</th><th>PH4</th>
+                            <th>ATS</th><th>AAS</th>
+                            <th class="col-na">NA</th>
+                        </tr>
+                    </thead>
+                    <tbody>${baris || '<tr><td colspan="9">Belum ada data murid.</td></tr>'}</tbody>
+                </table>
+            </div>
+            <p class="geser-hp">➡️ Geser tabel ke samping untuk melihat kolom ATS, AAS, dan NA.</p>
 
             <div class="footer-ttd">
                 <div class="box-ttd">
