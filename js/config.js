@@ -12,7 +12,8 @@ window.APP_CONFIG = {
     path: "data/db.json",
     teacherPassword: "alal",
     pollMs: 5000,          // interval cek data terbaru (murid & guru)
-    saveMs: 700            // tunda simpan agar tidak terlalu sering
+    saveMs: 700,           // tunda simpan agar tidak terlalu sering
+    fetchTimeoutMs: 6000   // batas waktu ambil data per sumber
 };
 
 /* Pengaturan cetak bawaan (dipakai bila repo belum punya data) */

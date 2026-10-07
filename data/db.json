@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1791181257749,
+  "updatedAt": 1791357002440,
   "config": {
     "gunakan_kop": "ya",
     "logo_kiri": "assets/logo_kiri_1785291736.png",
@@ -142,8 +142,96 @@
       "aas": 0
     },
     {
+      "student_id": 1,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 93,
+      "aas": 0
+    },
+    {
+      "student_id": 1,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 80,
+      "aas": 0
+    },
+    {
+      "student_id": 1,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 18,
+      "aas": 0
+    },
+    {
+      "student_id": 1,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 73,
+      "aas": 0
+    },
+    {
       "student_id": 2,
       "subject": "Bahasa Indonesia",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 2,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 2,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 83,
+      "aas": 0
+    },
+    {
+      "student_id": 2,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 65,
+      "aas": 0
+    },
+    {
+      "student_id": 2,
+      "subject": "PKn",
       "semester": "Ganjil",
       "ph1": 0,
       "ph2": 0,
@@ -164,6 +252,50 @@
       "aas": 0
     },
     {
+      "student_id": 3,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 3,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 3,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 3,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
       "student_id": 4,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -172,6 +304,50 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 0,
+      "aas": 0
+    },
+    {
+      "student_id": 4,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 93,
+      "aas": 0
+    },
+    {
+      "student_id": 4,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 78,
+      "aas": 0
+    },
+    {
+      "student_id": 4,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 0,
+      "aas": 0
+    },
+    {
+      "student_id": 4,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
       "aas": 0
     },
     {
@@ -186,6 +362,50 @@
       "aas": 0
     },
     {
+      "student_id": 5,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 93,
+      "aas": 0
+    },
+    {
+      "student_id": 5,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 5,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 24,
+      "aas": 0
+    },
+    {
+      "student_id": 5,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
       "student_id": 6,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -197,8 +417,96 @@
       "aas": 0
     },
     {
+      "student_id": 6,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 6,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 6,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 75,
+      "aas": 0
+    },
+    {
+      "student_id": 6,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
       "student_id": 7,
       "subject": "Bahasa Indonesia",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 7,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
+      "student_id": 7,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 7,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 7,
+      "subject": "PKn",
       "semester": "Ganjil",
       "ph1": 0,
       "ph2": 0,
@@ -219,6 +527,50 @@
       "aas": 0
     },
     {
+      "student_id": 8,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 75,
+      "aas": 0
+    },
+    {
+      "student_id": 8,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 8,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 80,
+      "aas": 0
+    },
+    {
+      "student_id": 8,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
       "student_id": 9,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -227,6 +579,50 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 9,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
+      "student_id": 9,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 9,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 9,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
       "aas": 0
     },
     {
@@ -241,8 +637,96 @@
       "aas": 0
     },
     {
+      "student_id": 10,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 88,
+      "aas": 0
+    },
+    {
+      "student_id": 10,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 10,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 63,
+      "aas": 0
+    },
+    {
+      "student_id": 10,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
       "student_id": 11,
       "subject": "Bahasa Indonesia",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 11,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 78,
+      "aas": 0
+    },
+    {
+      "student_id": 11,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 11,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 38,
+      "aas": 0
+    },
+    {
+      "student_id": 11,
+      "subject": "PKn",
       "semester": "Ganjil",
       "ph1": 0,
       "ph2": 0,
@@ -263,6 +747,50 @@
       "aas": 0
     },
     {
+      "student_id": 12,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 12,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 12,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 75,
+      "aas": 0
+    },
+    {
+      "student_id": 12,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
       "student_id": 13,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -271,6 +799,50 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 13,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 13,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 88,
+      "aas": 0
+    },
+    {
+      "student_id": 13,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 15,
+      "aas": 0
+    },
+    {
+      "student_id": 13,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
       "aas": 0
     },
     {
@@ -285,6 +857,50 @@
       "aas": 0
     },
     {
+      "student_id": 14,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 93,
+      "aas": 0
+    },
+    {
+      "student_id": 14,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 88,
+      "aas": 0
+    },
+    {
+      "student_id": 14,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 15,
+      "aas": 0
+    },
+    {
+      "student_id": 14,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
       "student_id": 15,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -293,6 +909,50 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 93,
+      "aas": 0
+    },
+    {
+      "student_id": 15,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 88,
+      "aas": 0
+    },
+    {
+      "student_id": 15,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 88,
+      "aas": 0
+    },
+    {
+      "student_id": 15,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 15,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
       "aas": 0
     },
     {
@@ -307,6 +967,50 @@
       "aas": 0
     },
     {
+      "student_id": 16,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 16,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
+      "student_id": 16,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 40,
+      "aas": 0
+    },
+    {
+      "student_id": 16,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
       "student_id": 17,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -315,6 +1019,50 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 17,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 17,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 17,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 17,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
       "aas": 0
     },
     {
@@ -329,6 +1077,50 @@
       "aas": 0
     },
     {
+      "student_id": 18,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 18,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 18,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 40,
+      "aas": 0
+    },
+    {
+      "student_id": 18,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
       "student_id": 19,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -337,6 +1129,50 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 19,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 19,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 93,
+      "aas": 0
+    },
+    {
+      "student_id": 19,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 68,
+      "aas": 0
+    },
+    {
+      "student_id": 19,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
       "aas": 0
     },
     {
@@ -351,6 +1187,50 @@
       "aas": 0
     },
     {
+      "student_id": 20,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
+      "student_id": 20,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 88,
+      "aas": 0
+    },
+    {
+      "student_id": 20,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 83,
+      "aas": 0
+    },
+    {
+      "student_id": 20,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
       "student_id": 21,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -362,6 +1242,50 @@
       "aas": 0
     },
     {
+      "student_id": 21,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 21,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 21,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
+      "student_id": 21,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 100,
+      "aas": 0
+    },
+    {
       "student_id": 22,
       "subject": "Bahasa Indonesia",
       "semester": "Ganjil",
@@ -370,6 +1294,50 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 22,
+      "subject": "Basa Jawa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 22,
+      "subject": "IPAS",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 22,
+      "subject": "Matematika",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 80,
+      "aas": 0
+    },
+    {
+      "student_id": 22,
+      "subject": "PKn",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 95,
       "aas": 0
     }
   ]

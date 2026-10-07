@@ -159,7 +159,10 @@
         document.getElementById('statusRepo').innerHTML =
             'Repo aktif: <b>' + Util.esc(Store.repoSlug() || '(belum diatur — mode lokal)') + '</b>' +
             ' • File: <b>' + Util.esc(window.APP_CONFIG.path) + '</b>' +
-            ' • Token: <b>' + (Store.token() ? 'terisi ✓' : 'belum ada') + '</b>';
+            ' • Token: <b>' + (Store.token() ? 'terisi ✓' : 'belum ada') + '</b>' +
+            (Store.adaTertunda()
+                ? ' • <b style="color:#e53e3e;">⚠️ ADA PERUBAHAN BELUM TERKIRIM KE GITHUB</b>'
+                : ' • <b style="color:#28a745;">semua perubahan sudah terkirim</b>');
 
         document.getElementById('inputToken').value = Store.token();
         document.getElementById('inputRepo').value = Store.repoOverride();
@@ -173,17 +176,33 @@
                 if (inp.name) d.config[inp.name] = inp.value;
             });
         });
-        notif('ok', 'Pengaturan berhasil disimpan & disinkronkan.');
+        const ok = await Store.simpanPaksa();
+        notif(ok ? 'ok' : 'err',
+            ok ? 'Pengaturan tersimpan & terkirim ke GitHub.'
+               : 'Pengaturan tersimpan di browser ini, TETAPI belum terkirim ke GitHub. Lihat pesan merah di bawah.');
     }
 
-    function simpanToken() {
+    async function simpanToken() {
         const t = document.getElementById('inputToken').value.trim();
         const r = document.getElementById('inputRepo').value.trim();
         Store.setToken(t);
         Store.setRepoOverride(r);
         isiForm();
-        if (t) Store.refresh();
-        notif('ok', 'Token & repo disimpan di browser ini.');
+        if (t) {
+            await Store.refresh();
+            if (Store.adaTertunda()) {
+                notif('info', 'Token tersimpan — mengirim perubahan yang tertunda...');
+                const ok = await Store.kirimTunda();
+                isiForm();
+                notif(ok ? 'ok' : 'err',
+                    ok ? 'Token tersimpan & perubahan tertunda berhasil dikirim ke GitHub!'
+                       : 'Token tersimpan, tetapi pengiriman tertunda masih gagal. Coba klik "Uji Koneksi".');
+            } else {
+                notif('ok', 'Token & repo disimpan di browser ini.');
+            }
+        } else {
+            notif('info', 'Token dikosongkan — perubahan tidak akan terkirim ke GitHub.');
+        }
     }
 
     function hapusToken() {

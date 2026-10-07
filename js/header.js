@@ -35,6 +35,27 @@ const Header = {
             pill.textContent = teks;
         });
 
+        /* Peringatan mencolok bila perubahan TIDAK sampai ke GitHub.
+           Tanpa ini guru mengira semuanya tersimpan padahal HP murid tidak
+           pernah menerima datanya. */
+        Store.onSimpan(res => {
+            if (res.ok) return;
+            const esc = window.Util ? Util.esc : (s => String(s));
+            let toast = document.getElementById('toastSync');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toastSync';
+                toast.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:18px;z-index:9999;' +
+                    'background:#e53e3e;color:#fff;padding:12px 18px;border-radius:8px;' +
+                    'box-shadow:0 6px 18px rgba(0,0,0,.3);font-size:14px;max-width:92vw;text-align:center;line-height:1.5;';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = '❌ ' + esc(res.pesan) +
+                ' — <a href="pengaturan.html" style="color:#fff;font-weight:bold;text-decoration:underline;">buka Pengaturan</a>';
+            clearTimeout(window.__toastSyncTimer);
+            window.__toastSyncTimer = setTimeout(() => { if (toast.parentNode) toast.remove(); }, 12000);
+        });
+
         document.addEventListener('click', function (e) {
             if (!e.target.matches('.hamburger')) {
                 const m = document.getElementById('menuItems');
