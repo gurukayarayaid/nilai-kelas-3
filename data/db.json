@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1791440688023,
+  "updatedAt": 1791440705172,
   "config": {
     "gunakan_kop": "ya",
     "logo_kiri": "assets/logo_kiri_1785291736.png",
@@ -1525,6 +1525,17 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 95,
+      "aas": 0
+    },
+    {
+      "student_id": 18,
+      "subject": "Bahasa Inggris",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
       "aas": 0
     }
   ]
