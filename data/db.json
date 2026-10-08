@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1791440570686,
+  "updatedAt": 1791440628214,
   "config": {
     "gunakan_kop": "ya",
     "logo_kiri": "assets/logo_kiri_1785291736.png",
@@ -1448,6 +1448,72 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 11,
+      "subject": "Bahasa Inggris",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 93,
+      "aas": 0
+    },
+    {
+      "student_id": 12,
+      "subject": "Bahasa Inggris",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 98,
+      "aas": 0
+    },
+    {
+      "student_id": 13,
+      "subject": "Bahasa Inggris",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 78,
+      "aas": 0
+    },
+    {
+      "student_id": 14,
+      "subject": "Bahasa Inggris",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 85,
+      "aas": 0
+    },
+    {
+      "student_id": 15,
+      "subject": "Bahasa Inggris",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 83,
+      "aas": 0
+    },
+    {
+      "student_id": 16,
+      "subject": "Bahasa Inggris",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 83,
       "aas": 0
     }
   ]
