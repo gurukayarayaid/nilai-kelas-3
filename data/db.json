@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1791517633912,
+  "updatedAt": 1791517637914,
   "config": {
     "gunakan_kop": "ya",
     "logo_kiri": "assets/logo_kiri_1785291736.png",
@@ -1745,6 +1745,17 @@
       "ph3": 0,
       "ph4": 0,
       "ats": 90,
+      "aas": 0
+    },
+    {
+      "student_id": 16,
+      "subject": "Seni Rupa",
+      "semester": "Ganjil",
+      "ph1": 0,
+      "ph2": 0,
+      "ph3": 0,
+      "ph4": 0,
+      "ats": 93,
       "aas": 0
     }
   ]
